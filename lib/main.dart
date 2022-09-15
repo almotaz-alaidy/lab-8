@@ -5,6 +5,7 @@ import 'package:lab8/screens/TV%20SCREEN.dart';
 import 'package:lab8/screens/microwave.dart';
 import 'package:lab8/screens/refrigerators.dart';
 import 'package:lab8/screens/washing%20machines.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -12,8 +13,25 @@ void main() {
   ));
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final VideoURL = "https://www.youtube.com/watch?v=a_9NgNI5qlQ";
+  late YoutubePlayerController _controller;
+  @override
+  void initState() {
+    final VideoID = YoutubePlayer.convertUrlToId(VideoURL);
+    _controller = YoutubePlayerController(initialVideoId: VideoID!);
+    flags:
+    YoutubePlayerFlags(autoPlay: false);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +47,7 @@ class Home extends StatelessWidget {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.only(top: 50, bottom: 30),
         alignment: Alignment.center,
         decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
@@ -38,6 +56,35 @@ class Home extends StatelessWidget {
         ])),
         child: ListView(
           children: [
+            YoutubePlayerBuilder(
+              player: YoutubePlayer(controller: _controller),
+              builder: (context, player) {
+                return Column();
+              },
+            ),
+            YoutubePlayer(
+              controller: _controller,
+              showVideoProgressIndicator: true,
+              onReady: () {
+                print("im ready");
+              },
+              bottomActions: [
+                CurrentPosition(),
+                ProgressBar(
+                  isExpanded: true,
+                  colors: ProgressBarColors(
+                      backgroundColor: Colors.grey,
+                      bufferedColor: Colors.greenAccent,
+                      handleColor: Colors.black,
+                      playedColor: Colors.blueGrey),
+                ),
+              ],
+            ),
+            Divider(
+              color: Colors.blueGrey,
+              thickness: 1,
+              height: 30,
+            ),
             MyText(
               MyFontFamily: "Combo-Regular",
               MyTextt: "refrigerators",

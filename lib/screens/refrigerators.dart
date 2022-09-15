@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:lab8/components/mytextwedget.dart';
 import 'package:lab8/components/mywedget.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../main.dart';
 
@@ -19,6 +20,20 @@ class _REFRIGERATORSState extends State<REFRIGERATORS> {
   bool myval = false;
   List MyListItem = ["1", "2", "3", "4"];
   String SelectedItem = "1";
+  final VideoURL = "https://www.youtube.com/watch?v=uWRTVSs82Dw";
+  late YoutubePlayerController _controller;
+
+  @override
+  void initState() {
+    final VideoID = YoutubePlayer.convertUrlToId(VideoURL);
+    _controller = YoutubePlayerController(initialVideoId: VideoID!);
+    flags:
+    const YoutubePlayerFlags(
+      autoPlay: false,
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +45,7 @@ class _REFRIGERATORSState extends State<REFRIGERATORS> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.only(top: 20),
         alignment: Alignment.center,
         decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
@@ -41,13 +56,43 @@ class _REFRIGERATORSState extends State<REFRIGERATORS> {
           children: [
             MyText(
               MyFontFamily: "Combo-Regular",
-              MyTextSize: 40,
-              MyTextt: "SAMSUNG",
+              MyTextSize: 25,
+              MyTextt: "this the last virison of oure special refrigerators :",
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            YoutubePlayerBuilder(
+              player: YoutubePlayer(controller: _controller),
+              builder: (context, player) {
+                return Column();
+              },
+            ),
+            YoutubePlayer(
+              controller: _controller,
+              showVideoProgressIndicator: true,
+              onReady: () {
+                print("im ready");
+              },
+              bottomActions: [
+                CurrentPosition(),
+                ProgressBar(
+                  isExpanded: true,
+                  colors: ProgressBarColors(
+                      backgroundColor: Colors.grey,
+                      bufferedColor: Colors.greenAccent,
+                      handleColor: Colors.black,
+                      playedColor: Colors.blueGrey),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 30,
             ),
             MyContainer(
               OnTap: () {},
               images:
-                  "https://th.bing.com/th/id/OIP.grXPn_ilsDtynmsqqMZq7QHaFr?w=233&h=180&c=7&r=0&o=5&pid=1.7",
+                  "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6196/6196191cv4d.jpg",
             ),
             SizedBox(
               height: 20,
