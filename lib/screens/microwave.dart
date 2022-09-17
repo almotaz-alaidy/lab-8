@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../components/mytextwedget.dart';
 import '../components/mywedget.dart';
@@ -17,18 +18,32 @@ class _microwaveState extends State<microwave> {
   bool myval = false;
   List MyListItem = ["1", "2", "3", "4"];
   String SelectedItem = "1";
+  final VideoURL = "https://www.youtube.com/watch?v=6ofVTk-S5aY";
+  late YoutubePlayerController _controller;
+  @override
+  void initState() {
+    final VideoID = YoutubePlayer.convertUrlToId(VideoURL);
+    _controller = YoutubePlayerController(initialVideoId: VideoID!);
+    flags:
+    YoutubePlayerFlags(
+      autoPlay: false,
+    );
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 0, 156, 161),
         title: Text(
-          "microwave",
+          "SAMSUNG MICROWAVE",
           style: TextStyle(fontFamily: "DancingScript-VariableFont_wght"),
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.only(top: 30, bottom: 20),
         alignment: Alignment.center,
         decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
@@ -40,12 +55,41 @@ class _microwaveState extends State<microwave> {
             MyText(
               MyFontFamily: "Combo-Regular",
               MyTextSize: 40,
-              MyTextt: "SAMSUNG",
+              MyTextt: "SAMSUNG MICROWAVE",
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            YoutubePlayerBuilder(
+              player: YoutubePlayer(controller: _controller),
+              builder: (context, player) {
+                return Column();
+              },
+            ),
+            YoutubePlayer(
+              controller: _controller,
+              showVideoProgressIndicator: true,
+              onReady: () {
+                print("IM READY");
+              },
+              bottomActions: [
+                CurrentPosition(),
+                ProgressBar(
+                  isExpanded: true,
+                  colors: ProgressBarColors(
+                      backgroundColor: Colors.grey,
+                      bufferedColor: Colors.greenAccent,
+                      handleColor: Colors.black,
+                      playedColor: Colors.blueGrey),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 30,
             ),
             MyContainer(
               OnTap: () {},
-              images:
-                  "https://th.bing.com/th/id/OIP.bBiO8RCnuGvftjmAqqNxyAHaEe?w=321&h=194&c=7&r=0&o=5&pid=1.7",
+              images: "https://i.ytimg.com/vi/vFAoyLbPN-8/mqdefault.jpg",
             ),
             SizedBox(
               height: 20,

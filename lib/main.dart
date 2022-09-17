@@ -102,7 +102,7 @@ class _HomeState extends State<Home> {
                 ));
               },
               images:
-                  "https://th.bing.com/th/id/OIP.83_kMmeEpuVw9nMJRNVlsQHaJ4?w=133&h=180&c=7&r=0&o=5&pid=1.7",
+                  "https://www.idgcdn.com.au/article/images/740x500/dimg/1_164.jpg",
             ),
             Divider(
               height: 50,
@@ -124,7 +124,7 @@ class _HomeState extends State<Home> {
                 ));
               },
               images:
-                  "https://th.bing.com/th/id/OIP.uigKnWzT81GF3J3uJlMKwAHaE8?w=292&h=195&c=7&r=0&o=5&pid=1.7",
+                  "https://cairosales.com/74259-large_default/samsung-tv-65-qled-4k-smart-qa65q60b.jpg",
             ),
             Divider(
               height: 50,
@@ -145,8 +145,7 @@ class _HomeState extends State<Home> {
                   },
                 ));
               },
-              images:
-                  "https://th.bing.com/th/id/OIP.8niFRpZ-6DlA3MjSgNCx4QHaEK?w=286&h=180&c=7&r=0&o=5&pid=1.7",
+              images: "https://i.ytimg.com/vi/bywOaHtNv3U/maxresdefault.jpg",
             ),
             Divider(
               height: 50,
@@ -167,8 +166,7 @@ class _HomeState extends State<Home> {
                   },
                 ));
               },
-              images:
-                  "https://th.bing.com/th/id/OIP.eEOle_210bzCRGpYznyLrAHaGl?w=192&h=180&c=7&r=0&o=5&pid=1.7",
+              images: "https://i.ytimg.com/vi/UOz1lPfAmGQ/maxresdefault.jpg",
             ),
           ],
         ),

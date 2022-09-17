@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:lab8/main.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../components/mytextwedget.dart';
 import '../components/mywedget.dart';
@@ -17,6 +20,20 @@ class _WashingState extends State<Washing> {
   bool myval = false;
   List MyListItem = ["1", "2", "3", "4"];
   String SelectedItem = "1";
+  final VideoURL = "https://www.youtube.com/watch?v=rJl6Bt_pSOE";
+  late YoutubePlayerController _controller;
+  @override
+  void initState() {
+    final VideoID = YoutubePlayer.convertUrlToId(VideoURL);
+    _controller = YoutubePlayerController(initialVideoId: VideoID!);
+    flags:
+    YoutubePlayerFlags(
+      autoPlay: false,
+    );
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +46,7 @@ class _WashingState extends State<Washing> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.only(top: 20),
         alignment: Alignment.center,
         decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
@@ -41,12 +58,42 @@ class _WashingState extends State<Washing> {
             MyText(
               MyFontFamily: "Combo-Regular",
               MyTextSize: 40,
-              MyTextt: "SAMSUNG",
+              MyTextt: "SAMSUNG WASHING MACHINE",
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            YoutubePlayerBuilder(
+              player: YoutubePlayer(controller: _controller),
+              builder: (context, player) {
+                return Column();
+              },
+            ),
+            YoutubePlayer(
+              controller: _controller,
+              showVideoProgressIndicator: true,
+              onReady: () {
+                print("IM READY");
+              },
+              bottomActions: [
+                CurrentPosition(),
+                ProgressBar(
+                  isExpanded: true,
+                  colors: ProgressBarColors(
+                      backgroundColor: Colors.grey,
+                      bufferedColor: Colors.greenAccent,
+                      handleColor: Colors.black,
+                      playedColor: Colors.blueGrey),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 30,
             ),
             MyContainer(
               OnTap: () {},
               images:
-                  "https://th.bing.com/th/id/OIP.Z-fY525V6PXv4dlb9LMrIAHaHa?w=214&h=214&c=7&r=0&o=5&pid=1.7",
+                  "https://images.samsung.com/is/image/samsung/p6pim/latin_en/feature/163912976/latin_en-feature-a-new-way-of-washing-531136026?\$FB_TYPE_K_JPG\$",
             ),
             SizedBox(
               height: 20,

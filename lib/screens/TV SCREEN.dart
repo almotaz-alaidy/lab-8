@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../components/mytextwedget.dart';
 import '../components/mywedget.dart';
@@ -17,6 +18,20 @@ class _TvScreenState extends State<TvScreen> {
   bool myval = false;
   List MyListItem = ["1", "2", "3", "4"];
   String SelectedItem = "1";
+  final VideoURL = "https://www.youtube.com/watch?v=r5O9XkSWWsU";
+  late YoutubePlayerController _controller;
+
+  @override
+  void initState() {
+    final VideoID = YoutubePlayer.convertUrlToId(VideoURL);
+    _controller = YoutubePlayerController(initialVideoId: VideoID!);
+    flags:
+    YoutubePlayerFlags(
+      autoPlay: false,
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +43,7 @@ class _TvScreenState extends State<TvScreen> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.only(top: 20),
         alignment: Alignment.center,
         decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
@@ -40,12 +55,42 @@ class _TvScreenState extends State<TvScreen> {
             MyText(
               MyFontFamily: "Combo-Regular",
               MyTextSize: 40,
-              MyTextt: "SAMSUNG",
+              MyTextt: "SAMSUNG TV",
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            YoutubePlayerBuilder(
+              player: YoutubePlayer(controller: _controller),
+              builder: (context, player) {
+                return Column();
+              },
+            ),
+            YoutubePlayer(
+              controller: _controller,
+              showVideoProgressIndicator: true,
+              onReady: () {
+                print("im ready");
+              },
+              bottomActions: [
+                CurrentPosition(),
+                ProgressBar(
+                  isExpanded: true,
+                  colors: ProgressBarColors(
+                      backgroundColor: Colors.grey,
+                      bufferedColor: Colors.greenAccent,
+                      handleColor: Colors.black,
+                      playedColor: Colors.blueGrey),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
             ),
             MyContainer(
               OnTap: () {},
               images:
-                  "https://th.bing.com/th/id/OIP.EtoL5M2ZmyMDpQj3xjwbWAHaEc?w=282&h=180&c=7&r=0&o=5&pid=1.7",
+                  "https://thegadgetflow.com/wp-content/uploads/2022/03/Samsung-2022-Neo-QLED-Series-01.jpg",
             ),
             SizedBox(
               height: 20,
